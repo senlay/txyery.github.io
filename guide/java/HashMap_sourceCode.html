@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HashMap源码 | SENLAY</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/txyery.github.io/favicon.ico">
+    <meta name="description" content="众木成林">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/txyery.github.io/assets/css/0.styles.8201c86e.css" as="style"><link rel="preload" href="/txyery.github.io/assets/js/app.49fe9aa7.js" as="script"><link rel="preload" href="/txyery.github.io/assets/js/3.5a265ed9.js" as="script"><link rel="preload" href="/txyery.github.io/assets/js/1.b89b8781.js" as="script"><link rel="preload" href="/txyery.github.io/assets/js/36.25b7baf7.js" as="script"><link rel="prefetch" href="/txyery.github.io/assets/js/10.815f1c54.js"><link rel="prefetch" href="/txyery.github.io/assets/js/100.96227b60.js"><link rel="prefetch" href="/txyery.github.io/assets/js/101.2021291b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/102.835037d3.js"><link rel="prefetch" href="/txyery.github.io/assets/js/103.00715ad5.js"><link rel="prefetch" href="/txyery.github.io/assets/js/104.849c843e.js"><link rel="prefetch" href="/txyery.github.io/assets/js/105.76fcff8b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/11.67a1f2b1.js"><link rel="prefetch" href="/txyery.github.io/assets/js/12.91e0f0d9.js"><link rel="prefetch" href="/txyery.github.io/assets/js/13.ff3d6abb.js"><link rel="prefetch" href="/txyery.github.io/assets/js/14.d21989b8.js"><link rel="prefetch" href="/txyery.github.io/assets/js/15.9036562a.js"><link rel="prefetch" href="/txyery.github.io/assets/js/16.40253b05.js"><link rel="prefetch" href="/txyery.github.io/assets/js/17.30adfb53.js"><link rel="prefetch" href="/txyery.github.io/assets/js/18.863c5ee2.js"><link rel="prefetch" href="/txyery.github.io/assets/js/19.89a4c802.js"><link rel="prefetch" href="/txyery.github.io/assets/js/20.50876ccb.js"><link rel="prefetch" href="/txyery.github.io/assets/js/21.391ce841.js"><link rel="prefetch" href="/txyery.github.io/assets/js/22.b783fb7e.js"><link rel="prefetch" href="/txyery.github.io/assets/js/23.598408a9.js"><link rel="prefetch" href="/txyery.github.io/assets/js/24.b2f773fe.js"><link rel="prefetch" href="/txyery.github.io/assets/js/25.b7fc7b69.js"><link rel="prefetch" href="/txyery.github.io/assets/js/26.0e11c845.js"><link rel="prefetch" href="/txyery.github.io/assets/js/27.51ed06d4.js"><link rel="prefetch" href="/txyery.github.io/assets/js/28.f62b4e00.js"><link rel="prefetch" href="/txyery.github.io/assets/js/29.8447dd16.js"><link rel="prefetch" href="/txyery.github.io/assets/js/30.6f455b87.js"><link rel="prefetch" href="/txyery.github.io/assets/js/31.9aad47ed.js"><link rel="prefetch" href="/txyery.github.io/assets/js/32.4b3371aa.js"><link rel="prefetch" href="/txyery.github.io/assets/js/33.8ea4adb9.js"><link rel="prefetch" href="/txyery.github.io/assets/js/34.edb53cf4.js"><link rel="prefetch" href="/txyery.github.io/assets/js/35.480b9220.js"><link rel="prefetch" href="/txyery.github.io/assets/js/37.242545c2.js"><link rel="prefetch" href="/txyery.github.io/assets/js/38.17c048ab.js"><link rel="prefetch" href="/txyery.github.io/assets/js/39.fc9dfabc.js"><link rel="prefetch" href="/txyery.github.io/assets/js/4.e94f28b5.js"><link rel="prefetch" href="/txyery.github.io/assets/js/40.8eb70a11.js"><link rel="prefetch" href="/txyery.github.io/assets/js/41.8c9fe172.js"><link rel="prefetch" href="/txyery.github.io/assets/js/42.89765705.js"><link rel="prefetch" href="/txyery.github.io/assets/js/43.6a41afe8.js"><link rel="prefetch" href="/txyery.github.io/assets/js/44.c3fb7a89.js"><link rel="prefetch" href="/txyery.github.io/assets/js/45.51d7de68.js"><link rel="prefetch" href="/txyery.github.io/assets/js/46.52bcfd9d.js"><link rel="prefetch" href="/txyery.github.io/assets/js/47.23e0a81b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/48.66713dd3.js"><link rel="prefetch" href="/txyery.github.io/assets/js/49.0c4b4f76.js"><link rel="prefetch" href="/txyery.github.io/assets/js/5.6af5f411.js"><link rel="prefetch" href="/txyery.github.io/assets/js/50.b3c04f77.js"><link rel="prefetch" href="/txyery.github.io/assets/js/51.e0ba814b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/52.19c2b37d.js"><link rel="prefetch" href="/txyery.github.io/assets/js/53.7043bce0.js"><link rel="prefetch" href="/txyery.github.io/assets/js/54.44162273.js"><link rel="prefetch" href="/txyery.github.io/assets/js/55.3634e4c8.js"><link rel="prefetch" href="/txyery.github.io/assets/js/56.16e52a18.js"><link rel="prefetch" href="/txyery.github.io/assets/js/57.64c6a66e.js"><link rel="prefetch" href="/txyery.github.io/assets/js/58.be5b4694.js"><link rel="prefetch" href="/txyery.github.io/assets/js/59.b2009f61.js"><link rel="prefetch" href="/txyery.github.io/assets/js/6.57eed0af.js"><link rel="prefetch" href="/txyery.github.io/assets/js/60.f6a882ce.js"><link rel="prefetch" href="/txyery.github.io/assets/js/61.70f08291.js"><link rel="prefetch" href="/txyery.github.io/assets/js/62.1c784e80.js"><link rel="prefetch" href="/txyery.github.io/assets/js/63.a3c53587.js"><link rel="prefetch" href="/txyery.github.io/assets/js/64.068ed130.js"><link rel="prefetch" href="/txyery.github.io/assets/js/65.98f4428d.js"><link rel="prefetch" href="/txyery.github.io/assets/js/66.0720c656.js"><link rel="prefetch" href="/txyery.github.io/assets/js/67.69292d82.js"><link rel="prefetch" href="/txyery.github.io/assets/js/68.02ccaf01.js"><link rel="prefetch" href="/txyery.github.io/assets/js/69.45006577.js"><link rel="prefetch" href="/txyery.github.io/assets/js/7.a0b89aec.js"><link rel="prefetch" href="/txyery.github.io/assets/js/70.0cf5d364.js"><link rel="prefetch" href="/txyery.github.io/assets/js/71.a62164f3.js"><link rel="prefetch" href="/txyery.github.io/assets/js/72.6602778a.js"><link rel="prefetch" href="/txyery.github.io/assets/js/73.421fd6b3.js"><link rel="prefetch" href="/txyery.github.io/assets/js/74.d44daa44.js"><link rel="prefetch" href="/txyery.github.io/assets/js/75.c790f6d0.js"><link rel="prefetch" href="/txyery.github.io/assets/js/76.31684e9d.js"><link rel="prefetch" href="/txyery.github.io/assets/js/77.476c3b7a.js"><link rel="prefetch" href="/txyery.github.io/assets/js/78.20bdda15.js"><link rel="prefetch" href="/txyery.github.io/assets/js/79.34b60739.js"><link rel="prefetch" href="/txyery.github.io/assets/js/8.270f4c17.js"><link rel="prefetch" href="/txyery.github.io/assets/js/80.63750f70.js"><link rel="prefetch" href="/txyery.github.io/assets/js/81.436eedf7.js"><link rel="prefetch" href="/txyery.github.io/assets/js/82.dabf6ebf.js"><link rel="prefetch" href="/txyery.github.io/assets/js/83.73e39b5e.js"><link rel="prefetch" href="/txyery.github.io/assets/js/84.8c1809ab.js"><link rel="prefetch" href="/txyery.github.io/assets/js/85.3a7909fe.js"><link rel="prefetch" href="/txyery.github.io/assets/js/86.1bcc3c80.js"><link rel="prefetch" href="/txyery.github.io/assets/js/87.75f45f1e.js"><link rel="prefetch" href="/txyery.github.io/assets/js/88.2c87821c.js"><link rel="prefetch" href="/txyery.github.io/assets/js/89.a97e5244.js"><link rel="prefetch" href="/txyery.github.io/assets/js/9.e02f81a7.js"><link rel="prefetch" href="/txyery.github.io/assets/js/90.afadc45b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/91.5fb6694f.js"><link rel="prefetch" href="/txyery.github.io/assets/js/92.8209a3ff.js"><link rel="prefetch" href="/txyery.github.io/assets/js/93.51360a6c.js"><link rel="prefetch" href="/txyery.github.io/assets/js/94.2573e81b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/95.3ad59e61.js"><link rel="prefetch" href="/txyery.github.io/assets/js/96.c0007382.js"><link rel="prefetch" href="/txyery.github.io/assets/js/97.6f9e063b.js"><link rel="prefetch" href="/txyery.github.io/assets/js/98.9d5dc667.js"><link rel="prefetch" href="/txyery.github.io/assets/js/99.a4b6e842.js">
+    <link rel="stylesheet" href="/txyery.github.io/assets/css/0.styles.8201c86e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container" data-v-4698c43e><div data-v-4698c43e><div id="loader-wrapper" class="loading-wrapper" data-v-1c4f0192 data-v-4698c43e data-v-4698c43e><div class="loader-main" data-v-1c4f0192><div data-v-1c4f0192></div><div data-v-1c4f0192></div><div data-v-1c4f0192></div><div data-v-1c4f0192></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-6cbeab0a data-v-4698c43e data-v-4698c43e><h3 class="title" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a>SENLAY</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a><input type="password" value="" data-v-6cbeab0a> <span data-v-6cbeab0a>Konck! Knock!</span> <button data-v-6cbeab0a>OK</button></label> <div class="footer" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a><span data-v-6cbeab0a><i class="iconfont reco-theme" data-v-6cbeab0a></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6cbeab0a>vuePress-theme-reco</a></span> <span data-v-6cbeab0a><i class="iconfont reco-copyright" data-v-6cbeab0a></i> <a data-v-6cbeab0a><span data-v-6cbeab0a>senlay</span>
+            
+          <span data-v-6cbeab0a>2020 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-4698c43e><header class="navbar" data-v-4698c43e><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/txyery.github.io/" class="home-link router-link-active"><img src="/txyery.github.io/logo1.jpg" alt="SENLAY" class="logo"> <span class="site-name">SENLAY</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/txyery.github.io/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/扫描二维码，联系我/" class="nav-link"><i class="iconfont undefined"></i>
+  扫描二维码，联系我
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/PowerMockito/" class="nav-link"><i class="iconfont undefined"></i>
+  PowerMockito
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/conception/" class="nav-link"><i class="iconfont undefined"></i>
+  conception
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/diary/" class="nav-link"><i class="iconfont undefined"></i>
+  diary
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/docker/" class="nav-link"><i class="iconfont undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/dva/" class="nav-link"><i class="iconfont undefined"></i>
+  dva
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/java生产环境部署/" class="nav-link"><i class="iconfont undefined"></i>
+  java生产环境部署
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/flowable/" class="nav-link"><i class="iconfont undefined"></i>
+  flowable
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/java/" class="nav-link"><i class="iconfont undefined"></i>
+  java
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/jboss/" class="nav-link"><i class="iconfont undefined"></i>
+  jboss
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/js/" class="nav-link"><i class="iconfont undefined"></i>
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/layui/" class="nav-link"><i class="iconfont undefined"></i>
+  layui
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/linux/" class="nav-link"><i class="iconfont undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/mysql/" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/Netty/" class="nav-link"><i class="iconfont undefined"></i>
+  Netty
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/Python/" class="nav-link"><i class="iconfont undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/redis/" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/jdbc/" class="nav-link"><i class="iconfont undefined"></i>
+  jdbc
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/spring/" class="nav-link"><i class="iconfont undefined"></i>
+  spring
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/SpringCloud/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloud
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/tools/" class="nav-link"><i class="iconfont undefined"></i>
+  tools
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/vue/" class="nav-link"><i class="iconfont undefined"></i>
+  vue
+</a></li></ul></div></div><div class="nav-item"><a href="/txyery.github.io/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/txyery.github.io/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/txyery.github.io/about/" class="nav-link"><i class="iconfont reco-about"></i>
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      友情链接
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/senlay/txyery.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ylbs/paceToPace" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="http://tool.oschina.net/apidocs/apidoc?api=jdk_7u4" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  jdk-api
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.runoob.com/java/java-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  java
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="http://element-ui.cn/#/zh-CN/component/installation" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  element-ui
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.w3cschool.cn/wkspring/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.runoob.com/design-pattern/design-pattern-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  design-pattern
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-4698c43e></div> <aside class="sidebar" data-v-4698c43e><div class="personal-info-wrapper" data-v-6c8ffc9c><img src="/txyery.github.io/logo1.jpg" alt="author-avatar" class="personal-img" data-v-6c8ffc9c> <h3 class="name" data-v-6c8ffc9c>
+    senlay
+  </h3> <div class="num" data-v-6c8ffc9c><div data-v-6c8ffc9c><h3 data-v-6c8ffc9c>71</h3> <h6 data-v-6c8ffc9c>文章</h6></div> <div data-v-6c8ffc9c><h3 data-v-6c8ffc9c>26</h3> <h6 data-v-6c8ffc9c>标签</h6></div></div> <hr data-v-6c8ffc9c></div> <nav class="nav-links"><div class="nav-item"><a href="/txyery.github.io/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/扫描二维码，联系我/" class="nav-link"><i class="iconfont undefined"></i>
+  扫描二维码，联系我
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/PowerMockito/" class="nav-link"><i class="iconfont undefined"></i>
+  PowerMockito
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/conception/" class="nav-link"><i class="iconfont undefined"></i>
+  conception
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/diary/" class="nav-link"><i class="iconfont undefined"></i>
+  diary
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/docker/" class="nav-link"><i class="iconfont undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/dva/" class="nav-link"><i class="iconfont undefined"></i>
+  dva
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/java生产环境部署/" class="nav-link"><i class="iconfont undefined"></i>
+  java生产环境部署
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/flowable/" class="nav-link"><i class="iconfont undefined"></i>
+  flowable
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/java/" class="nav-link"><i class="iconfont undefined"></i>
+  java
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/jboss/" class="nav-link"><i class="iconfont undefined"></i>
+  jboss
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/js/" class="nav-link"><i class="iconfont undefined"></i>
+  js
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/layui/" class="nav-link"><i class="iconfont undefined"></i>
+  layui
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/linux/" class="nav-link"><i class="iconfont undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/mysql/" class="nav-link"><i class="iconfont undefined"></i>
+  mysql
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/Netty/" class="nav-link"><i class="iconfont undefined"></i>
+  Netty
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/Python/" class="nav-link"><i class="iconfont undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/redis/" class="nav-link"><i class="iconfont undefined"></i>
+  redis
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/jdbc/" class="nav-link"><i class="iconfont undefined"></i>
+  jdbc
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/spring/" class="nav-link"><i class="iconfont undefined"></i>
+  spring
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/SpringCloud/" class="nav-link"><i class="iconfont undefined"></i>
+  SpringCloud
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/tools/" class="nav-link"><i class="iconfont undefined"></i>
+  tools
+</a></li><li class="dropdown-item"><!----> <a href="/txyery.github.io/categories/vue/" class="nav-link"><i class="iconfont undefined"></i>
+  vue
+</a></li></ul></div></div><div class="nav-item"><a href="/txyery.github.io/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><a href="/txyery.github.io/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/txyery.github.io/about/" class="nav-link"><i class="iconfont reco-about"></i>
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      友情链接
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/senlay/txyery.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://gitee.com/ylbs/paceToPace" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="http://tool.oschina.net/apidocs/apidoc?api=jdk_7u4" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  jdk-api
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.runoob.com/java/java-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  java
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  vue
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="http://element-ui.cn/#/zh-CN/component/installation" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  element-ui
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.w3cschool.cn/wkspring/" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  spring
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://www.runoob.com/design-pattern/design-pattern-tutorial.html" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont undefined"></i>
+  design-pattern
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>HashMap源码</span> <!----></p> <!----></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-6cbeab0a data-v-4698c43e><h3 class="title" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a>HashMap源码</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a><input type="password" value="" data-v-6cbeab0a> <span data-v-6cbeab0a>Konck! Knock!</span> <button data-v-6cbeab0a>OK</button></label> <div class="footer" style="display:none;" data-v-6cbeab0a data-v-6cbeab0a><span data-v-6cbeab0a><i class="iconfont reco-theme" data-v-6cbeab0a></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6cbeab0a>vuePress-theme-reco</a></span> <span data-v-6cbeab0a><i class="iconfont reco-copyright" data-v-6cbeab0a></i> <a data-v-6cbeab0a><span data-v-6cbeab0a>senlay</span>
+            
+          <span data-v-6cbeab0a>2020 - </span>
+          2021
+        </a></span></div></div> <div data-v-4698c43e><main class="page"><!----> <div class="page-title" style="display:none;"><h1>HashMap源码</h1> <hr> <div data-v-484a899e><i class="iconfont reco-account" data-v-484a899e><span data-v-484a899e>senlay</span></i> <i class="iconfont reco-date" data-v-484a899e><span data-v-484a899e>2020-01-08</span></i> <!----> <i class="iconfont reco-tag tags" data-v-484a899e><span class="tag-item" data-v-484a899e>
+      sourceCode
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h4 id="散列查找"><a href="#散列查找" class="header-anchor">#</a> 散列查找</h4> <ul><li>常用的查找方法</li></ul> <blockquote><ul><li>顺序查找 O(N)</li> <li>二分查找(静态查找) O(log2 N)</li> <li>二叉查找 O(h) h为二叉树的高度</li> <li>平衡二叉查找 O(log2 N)</li></ul></blockquote> <ul><li>查找的本质</li></ul> <blockquote><p>已知对象查找位置，即根据关键值KEY查找位置
+那么如何排列才能快速找出位置呢？</p> <ul><li>有序安排对象：全部按照顺序或者半序</li> <li>直接 “计算出” 对象位置：散列</li></ul></blockquote> <ul><li>散列的前提要求</li></ul> <blockquote><ul><li>计算位置：执行散列函数计算出关键值存储的位置</li> <li>解决冲突：应用某种策略解决多个关键值相同的问题</li></ul></blockquote> <ul><li>时间复杂度</li></ul> <blockquote><p>O(1),最低时间复杂度，耗时/耗空间与输入数据的大小无关，无论输入数据量增大多少倍，耗时/耗空间都不变，即无论数据规模多大，都可以在一次计算后找到目标（不考虑冲突的话）</p></blockquote> <blockquote><p>注意：算法复杂度时,常用o(1), o(n), o(logn), o(nlogn)表示对应算法的时间复杂度，是算法的时空复杂度的表示。不仅仅用于表示时间复杂度，也用于表示空间复杂度。
+O后面的括号中有一个函数，指明某个算法的耗时/耗空间与数据增长量之间的关系。其中的n代表输入数据的量。 
+比如时间复杂度为O(n)，就代表数据输入量增大n倍，耗时也增大n倍。比如常见的遍历算法。再比如时间复杂度O(n^2)，就代表数据量增大n倍时，耗时增大n的平方倍，这是比线性更高的时间复杂度。比如冒泡排序，就是典型的O(n^2)的算法，对n个数排序，需要扫描n×n次。 
+再比如O(logn)，当数据增大n倍时，耗时增大logn倍（这里的log是以2为底的，比如，当数据增大256倍时，耗时只增大8倍，是比线性还要低的时间复杂度）。二分查找就是O(logn)的算法，每找一次排除一半的可能，256个数据中查找只要找8次就可以找到目标。 
+O(nlogn)同理，就是n乘以logn，当数据增大256倍时，耗时增大256*8=2048倍。这个复杂度高于线性低于平方。归并排序就是O(nlogn)的时间复杂度。</p></blockquote> <ul><li>散列的基本思想</li></ul> <blockquote><p>以关键值key为自变量，通过一个函数h(key)得出函数值，作为数据对象的存储地址；然而，正如事情皆有巧合一般，不同的key经过h(key)计算得出的函数值可能相等，那么这种情况我们认为是散列冲突，即h(key1)=h(key2),
+那么此时就需要一种策略去解决冲突，java中HashMap则是通过拉链法解决冲突的，即将冲突对象放在链表的下一个节点</p></blockquote> <ul><li>影响散列查找效率的因素</li></ul> <blockquote><ul><li>装载因子: 假设散列表容量的大小为M，填入表中的个数为N，那么装载因子=N/M,如HashMap中 装载因子默认为0.75，默认容量为16，即：0.75=12/16
+装载因子越大散列冲突的概率越大，越小冲突越小</li> <li>散列函数：该函数应尽量使数据对象分布均匀，减少冲突，常用算法：通过模运算使数据充分分布均匀，HashMap中则是通过n-1（n为数组长度）&amp;hash计算，实则也是通过这一方法分配位置</li></ul></blockquote> <p><img src="/img/hash.png" alt=""></p> <h4 id="红黑树"><a href="#红黑树" class="header-anchor">#</a> 红黑树</h4> <blockquote><p><a href="https://www.jianshu.com/p/e136ec79235c" target="_blank" rel="noopener noreferrer">了解红黑树<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <h4 id="hashmap概述"><a href="#hashmap概述" class="header-anchor">#</a> HashMap概述</h4> <p><img src="/img/HashMap.png" alt=""></p> <ul><li>属于集合框架范畴，位于util包下</li> <li>继承AbstractMap</li> <li>实现Map&lt;K,V&gt;, Cloneable, Serializable</li> <li>JDK1.8中采用entry数组+链表+红黑树实现</li> <li>使用链表解决哈希碰撞，将同一个hash值存储在一个链表的不同节点</li> <li>当阈值大于8以后将链表转换为红黑树</li> <li>HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashcode，让后找到bucket位置来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象。HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会储存在链表的下一个节点中。 HashMap在每个链表节点中储存键值对对象。</li> <li>HashMap 通过 key 的 hashCode经过扰动函数处理过后得到hash值。然后通过 (n-1) &amp; hash 判断当前元素存放的位置(n 指的是数组长度)。如果当前位置存在 元素的话,判断此元素 hash 值以及 key 是否相同,相同的话直接覆盖,不相同通过拉链法解决冲突。</li></ul> <blockquote><ul><li>拉链法又叫链地址法，Java中的HashMap在存储数据的时候就是用的拉链法来实现的，拉链发就是把具有相同散列地址的关键字(同义词)值放在同一个单链表中，称为同义词链表。</li> <li>扰动函数指的就是 HashMap 的 hash 方法。使用 hash 方法也就是扰动函数是为了防止一些实现比较差的 hashCode() 方法 换句话说使用扰动函数之后可以减少碰撞。</li></ul></blockquote> <ul><li><p>优点：一对一的查找效率很高；</p></li> <li><p>缺点：一个关键字可能对应多个散列地址；需要查找一个范围时，效果不好。</p></li> <li><p>散列冲突：不同的关键字经过散列函数的计算得到了相同的散列地址。</p></li> <li><p>好的散列函数=计算简单+分布均匀（计算得到的散列地址分布均匀）</p></li> <li><p>哈希表是种数据结构，它可以提供快速的插入操作和查找操作。</p></li> <li><p>成员变量</p></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    /**
+        * The default initial capacity - MUST be a power of two.
+          默认容量必须为2的幂，初始容量为16
+        */
+       static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
+   
+       /**
+        * The maximum capacity, used if a higher value is implicitly specified
+        * by either of the constructors with arguments.
+        * MUST be a power of two &lt;= 1&lt;&lt;30.
+         最大容量小于等于1&lt;&lt;30
+        */
+       static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;
+   
+       /**
+        * The load factor used when none specified in constructor.
+        负载因子默认为0.75
+        */
+       static final float DEFAULT_LOAD_FACTOR = 0.75f;
+   
+       /**
+        * The bin count threshold for using a tree rather than list for a
+        * bin.  Bins are converted to trees when adding an element to a
+        * bin with at least this many nodes. The value must be greater
+        * than 2 and should be at least 8 to mesh with assumptions in
+        * tree removal about conversion back to plain bins upon
+        * shrinkage.
+        //当桶(bucket)上的结点数大于这个值时会转成红黑树
+        */
+       static final int TREEIFY_THRESHOLD = 8;
+   
+       /**
+        * The bin count threshold for untreeifying a (split) bin during a
+        * resize operation. Should be less than TREEIFY_THRESHOLD, and at
+        * most 6 to mesh with shrinkage detection under removal.
+        // 当桶(bucket)上的结点数小于这个值时树转链表
+        */
+       static final int UNTREEIFY_THRESHOLD = 6;
+   
+       /**
+        * The smallest table capacity for which bins may be treeified.
+        * (Otherwise the table is resized if too many nodes in a bin.)
+        * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts
+        * between resizing and treeification thresholds.
+        // 桶中结构转化为红黑树对应的table的最小大小
+        */
+       static final int MIN_TREEIFY_CAPACITY = 64;
+       
+       
+         /* ---------------- Fields -------------- */
+       
+           /**
+            * The table, initialized on first use, and resized as
+            * necessary. When allocated, length is always a power of two.
+            * (We also tolerate length zero in some operations to allow
+            * bootstrapping mechanics that are currently not needed.)
+            哈希桶，存放链表。 长度是2的N次方，或者初始化时为0.
+            */
+           transient Node&lt;K,V&gt;[] table;
+       
+           /**
+            * Holds cached entrySet(). Note that AbstractMap fields are used
+            * for keySet() and values().
+             存放具体元素的集合
+            */
+           transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;
+       
+           /**
+            * The number of key-value mappings contained in this map.
+            // 存放元素的个数，注意这个不等于数组的长度。此映射中包含的键-值映射数
+            */
+           transient int size;
+       
+           /**
+            * The number of times this HashMap has been structurally modified
+            * Structural modifications are those that change the number of mappings in
+            * the HashMap or otherwise modify its internal structure (e.g.,
+            * rehash).  This field is used to make iterators on Collection-views of
+            * the HashMap fail-fast.  (See ConcurrentModificationException).
+            */
+           transient int modCount;
+       
+           /**
+            * The next size value at which to resize (capacity * load factor).
+            *
+            * @serial
+            */
+           // (The javadoc description is true upon serialization.
+           // Additionally, if the table array has not been allocated, this
+           // field holds the initial array capacity, or zero signifying
+           // DEFAULT_INITIAL_CAPACITY.)
+           //哈希表内元素数量的阈值，当哈希表内元素数量超过阈值时，会发生扩容resize()
+            调整为：容量*负载因子，需要注意的是，当超过16*0.75时候，将扩容为原来的2倍
+           int threshold;
+       
+           /**
+            * The load factor for the hash table.
+            * 
+            * @serial
+            //加载因子，用于计算哈希表元素数量的阈值。  threshold = 哈希桶.length * loadFactor;
+            */
+           final float loadFactor;
+       
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br></div></div><ul><li>哈希桶NODE的结构</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>  static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; {
+         final int hash;
+         final K key;
+         V value;
+         Node&lt;K,V&gt; next;
+ 
+         Node(int hash, K key, V value, Node&lt;K,V&gt; next) {
+             this.hash = hash;
+             this.key = key;
+             this.value = value;
+             this.next = next;
+         }
+ 
+         public final K getKey()        { return key; }
+         public final V getValue()      { return value; }
+         public final String toString() { return key + &quot;=&quot; + value; }
+ 
+         public final int hashCode() {
+             return Objects.hashCode(key) ^ Objects.hashCode(value);
+         }
+ 
+         public final V setValue(V newValue) {
+             V oldValue = value;
+             value = newValue;
+             return oldValue;
+         }
+ 
+         public final boolean equals(Object o) {
+             if (o == this)
+                 return true;
+             if (o instanceof Map.Entry) {
+                 Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;
+                 if (Objects.equals(key, e.getKey()) &amp;&amp;
+                     Objects.equals(value, e.getValue()))
+                     return true;
+             }
+             return false;
+         }
+     }
+        
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><blockquote><p>Node实现Map.Entry&lt;K,V&gt;，成员变量有key（final修改不可变）、value（可变）、hash（final修改不可变）、next（下一个节点）</p></blockquote> <ul><li>增加（put）</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>    public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+    
+     final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                       boolean evict) {
+            Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;
+            if ((tab = table) == null || (n = tab.length) == 0)
+                n = (tab = resize()).length;
+            if ((p = tab[i = (n - 1) &amp; hash]) == null)
+                tab[i] = newNode(hash, key, value, null);
+            else {
+                Node&lt;K,V&gt; e; K k;
+                if (p.hash == hash &amp;&amp;
+                    ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+                    e = p;
+                else if (p instanceof TreeNode)
+                    e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+                else {
+                    for (int binCount = 0; ; ++binCount) {
+                        if ((e = p.next) == null) {
+                            p.next = newNode(hash, key, value, null);
+                            if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                                treeifyBin(tab, hash);
+                            break;
+                        }
+                        if (e.hash == hash &amp;&amp;
+                            ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                            break;
+                        p = e;
+                    }
+                }
+                if (e != null) { // existing mapping for key
+                    V oldValue = e.value;
+                    if (!onlyIfAbsent || oldValue == null)
+                        e.value = value;
+                    afterNodeAccess(e);
+                    return oldValue;
+                }
+            }
+            ++modCount;
+            if (++size &gt; threshold)
+                resize();
+            afterNodeInsertion(evict);
+            return null;
+        }
+    
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br></div></div><ul><li>查询（get）</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code> public V get(Object key) {
+        Node&lt;K,V&gt; e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+ 
+    final Node&lt;K,V&gt; getNode(int hash, Object key) {
+         Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;
+         if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;
+             (first = tab[(n - 1) &amp; hash]) != null) {
+             if (first.hash == hash &amp;&amp; // always check first node
+                 ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))
+                 return first;
+             if ((e = first.next) != null) {
+                 if (first instanceof TreeNode)
+                     return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);
+                 do {
+                     if (e.hash == hash &amp;&amp;
+                         ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                         return e;
+                 } while ((e = e.next) != null);
+             }
+         }
+         return null;
+     }   
+    
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">4/14/2021, 1:05:09 PM</span></div></footer> <!----> <!----></main> <!----> <div class="comments-wrapper" data-v-4698c43e><div class="valine-wrapper"><div id="valine"></div></div></div></div></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-44bd5a18 data-v-44bd5a18><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-44bd5a18><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-44bd5a18></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-44bd5a18></path></svg></div></div></div>
+    <script src="/txyery.github.io/assets/js/app.49fe9aa7.js" defer></script><script src="/txyery.github.io/assets/js/3.5a265ed9.js" defer></script><script src="/txyery.github.io/assets/js/1.b89b8781.js" defer></script><script src="/txyery.github.io/assets/js/36.25b7baf7.js" defer></script>
+  </body>
+</html>
